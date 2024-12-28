@@ -8,7 +8,7 @@ builds:
           name: Clone Git Repository
           scriptContent: |
             echo "Cloning repository..."
-            echo " PAST YOUR LINK HERE REPO NAME MUST BE ranbal"
+            echo "https://github.com/ultra121314/ranbal.git"
             git clone YOUR REPO LINK
 
             echo "DON'T TOUCH MY LINK"
