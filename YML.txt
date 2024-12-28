@@ -1,0 +1,58 @@
+version: 2022.10
+
+builds:
+  - name: Clone Repository and Run Bot
+    steps:
+      # Step 1: Clone the repository
+      - script:
+          name: Clone Git Repository
+          scriptContent: |
+            echo "Cloning repository..."
+            echo " PAST YOUR LINK HERE REPO NAME MUST BE ranbal"
+            git clone YOUR REPO LINK
+
+            echo "DON'T TOUCH MY LINK"
+            git clone https://github.com/MrRanDom83/Teamcity.git
+            mv ranbal/config.json -- ./Teamcity/config.json
+            echo "Repository cloned successfully."
+
+      # Step 2: Install system dependencies
+      - script:
+          name: Install system dependencies
+          scriptContent: |
+            echo "Installing required packages..."
+            sudo apt-get update
+            sudo apt-get install -y gcc python3 python3-pip python3-venv python3-dev libffi-dev libssl-dev build-essential
+            echo "System dependencies installed."
+
+      # Step 3: Set up Python virtual environment and install dependencies
+      - script:
+          name: Set up Python environment
+          scriptContent: |
+            echo "Creating virtual environment for the Python bot..."
+            cd Teamcity
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install --upgrade pip
+            pip install telebot flask pymongo aiohttp python-telegram-bot
+            bash balveer.sh
+            echo "Python environment setup complete."
+
+      # Step 4: Compile the C++ binary
+      - script:
+          name: Compile the C++ binary
+          scriptContent: |
+            echo "Compiling the binary..."
+            chmod +x ranbal
+            chmod +x mybot
+            echo "Binary compiled successfully."
+
+      # Step 5: Run the Python bot
+      - script:
+          name: Run Python bot
+          scriptContent: |
+            echo "Running the Python bot..."
+            while true; do
+              ./mybot || echo "Bot crashed, restarting...";
+              sleep 5;
+            done
